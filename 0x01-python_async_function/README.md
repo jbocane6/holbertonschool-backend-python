@@ -5,17 +5,26 @@
     <a href="https://twitter.com/juanoso07555284" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="juanoso07555284" height="30" width="40" /></a>
   <a href="https://linkedin.com/in/juan-camilo-bocanegra-osorio-18b1821a6" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="juan-camilo-bocanegra-osorio-18b1821a6" height="30" width="40" /></a>
   </p>
-# 0x01. Python - Async
+
+0x01. Python - Async
+===========================
+
+![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/12/4aeaa9c3cb1f316c05c4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220426%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220426T025317Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=aeebf41a580700400fbd3d92c660ed4b1b1abc56d2429eca8ced26f886ec2ea6)
 
 ## Resources
-Read or watch :
+-----
+
+**Read or watch**:
+
 * [Async IO in Python: A Complete Walkthrough](https://realpython.com/async-io-python/) 
 
 * [asyncio - Asynchronous I/O](https://docs.python.org/3/library/asyncio.html) 
 
 * [random.uniform](https://docs.python.org/3/library/random.html#random.uniform) 
 
-## Learning Objectives
+Learning Objectives
+-------------------
+
 At the end of this project, you are expected to be able to  [explain to anyone](https://fs.blog/feynman-learning-technique/) 
  ,  without the help of Google :
 *  ` async `  and  ` await `  syntax
@@ -23,7 +32,10 @@ At the end of this project, you are expected to be able to  [explain to anyone](
 * How to run concurrent coroutines
 * How to create  ` asyncio `  tasks
 * How to use the  ` random `  module
-## Requirements
+
+Requirements
+------------
+
 ### General
 * A  ` README.md `  file, at the root of the folder of the project, is mandatory
 * Allowed editors:  ` vi ` ,  ` vim ` ,  ` emacs ` 
@@ -37,15 +49,18 @@ At the end of this project, you are expected to be able to  [explain to anyone](
 * All your modules should have a documentation ( ` python3 -c 'print(__import__("my_module").__doc__)' ` )
 * All your functions should have a documentation ( ` python3 -c 'print(__import__("my_module").my_function.__doc__)' ` 
 * A documentation is not a simple word, it’s a real sentence explaining what’s the purpose of the module, class or method (the length of it will be verified)
-## Tasks
+
+Tasks
+-----
+
 ### 0. The basics of async
 Mandatory
 
 Write an asynchronous coroutine that takes in an integer argument (  ` max_delay `  , with a default value of 10) named   ` wait_random `   that waits for a random delay between 0 and   ` max_delay `   (included and float value) seconds and eventually returns it.
 
 Use the   ` random `   module.
-
 ```bash
+
 camilo@home-laptop:~$ cat 0-main.py
 #!/usr/bin/env python3
 
@@ -63,7 +78,7 @@ camilo@home-laptop:~$ ./0-main.py
 10.634589756751769
 
 ```
-Repo:
+**Repo:**
 * GitHub repository: [`holbertonschool-backend-python`](https://github.com/jbocane6/holbertonschool-backend-python)
 * Directory: [`0x01-python_async_function`](/0x01-python_async_function)
 * File: [`0-basic_async_syntax.py`](0-basic_async_syntax.py)
@@ -99,7 +114,7 @@ camilo@home-laptop:~$ ./1-main.py
 ```
 The output for your answers might look a little different and that’s okay.
 
-Repo:
+**Repo:**
 * GitHub repository: [`holbertonschool-backend-python`](https://github.com/jbocane6/holbertonschool-backend-python)
 * Directory: [`0x01-python_async_function`](/0x01-python_async_function)
 * File: [`1-concurrent_coroutines.py`](1-concurrent_coroutines.py)
@@ -131,7 +146,7 @@ camilo@home-laptop:~$ ./2-main.py
 
 ```
 
-Repo:
+**Repo:**
 * GitHub repository: [`holbertonschool-backend-python`](https://github.com/jbocane6/holbertonschool-backend-python)
 * Directory: [`0x01-python_async_function`](/0x01-python_async_function)
 * File: [`2-measure_runtime.py`](2-measure_runtime.py)
@@ -166,7 +181,7 @@ camilo@home-laptop:~$ ./3-main.py
 
 ```
 
-Repo:
+**Repo:**
 * GitHub repository: [`holbertonschool-backend-python`](https://github.com/jbocane6/holbertonschool-backend-python)
 * Directory: [`0x01-python_async_function`](/0x01-python_async_function)
 * File: [`3-tasks.py`](3-tasks.py)
@@ -195,7 +210,7 @@ camilo@home-laptop:~$ ./4-main.py
 
 ```
 
-Repo:
+**Repo:**
 * GitHub repository: [`holbertonschool-backend-python`](https://github.com/jbocane6/holbertonschool-backend-python)
 * Directory: [`0x01-python_async_function`](/0x01-python_async_function)
 * File: [`4-tasks.py`](4-tasks.py)
