@@ -8,3 +8,4 @@
 
 # holbertonschool-backend-python
 - [0x01-python_async_function](https://github.com/jbocane6/holbertonschool-backend-python/tree/master/0x01-python_async_function)
+- [0x02-python_async_comprehension](https://github.com/jbocane6/holbertonschool-backend-python/tree/master/0x02-python_async_comprehension)
