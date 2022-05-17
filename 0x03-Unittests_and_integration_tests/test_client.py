@@ -1,27 +1,17 @@
 #!/usr/bin/env python3
 """
-Familiarize yourself with the client.GithubOrgClient class.
-Declare the TestGithubOrgClient(unittest.TestCase) class
-and implement the test_org method.
-This method should test that GithubOrgClient.org returns the correct value.
-Use @patch as a decorator to make sure get_json is called once
-with the expected argument but make sure it is not executed.
-Use @parameterized.expand as a decorator to parametrize the test
-with a couple of org examples to pass to GithubOrgClient, in this order:
-    google
-    abc
-Of course, no external HTTP calls should be made.
+a python unit test for client files
 """
 import unittest
-from unittest.mock import patch, PropertyMock
-from parameterized import parameterized
+import requests
+from unittest.mock import patch, PropertyMock, Mock
 from client import GithubOrgClient
+from parameterized import parameterized, parameterized_class
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """
-    client.GithubOrgClient class.
-    """
+    """ a class to implement github or client class"""
     @parameterized.expand([
         ('google'),
         ('abc')
@@ -29,7 +19,11 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.get_json')
     def test_org(self, org_name, mk_obj):
         """
-        Should test that GithubOrgClient.org returns the correct value.
+        test_org- function to test the github org
+        Arguments:
+            org_name: the given name of the organization
+        Returns:
+            ok if it succedd fail otherwise
         """
         tst_cls = GithubOrgClient(org_name)
         tst_cls.org()
@@ -38,12 +32,11 @@ class TestGithubOrgClient(unittest.TestCase):
 
     def test_public_repos_url(self):
         """
-        Implement the test_public_repos_url method to
-        unit-test GithubOrgClient._public_repos_url.
-        Use patch as a context manager to patch GithubOrgClient.org
-        and make it return a known payload.
-        Test that the result of _public_repos_url is the expected one
-        based on the mocked payload.
+        test_public_repos_url - functin to test the public repos url
+        Arguments:
+            nothing
+        Returns:
+            ok if it succeded fail otherwise
         """
         with patch('client.GithubOrgClient.org',
                    new_callable=PropertyMock) as mk:
@@ -52,3 +45,81 @@ class TestGithubOrgClient(unittest.TestCase):
             tst_cls = GithubOrgClient('test')
             rslt = tst_cls._public_repos_url
             self.assertEqual(rslt, pload['repos_url'])
+
+    @patch('client.get_json')
+    def test_public_repos(self, mk_jsn):
+        """
+        test_public_repos - function to test public repos
+        Arguments:
+            mk_json - the given moke object for get json
+        Returns:
+            ok if it succeded fail otherwise
+        """
+        test = [{'name': 'Facebook', 'name': 'LinkedIn'}]
+        mk_jsn.return_value = test
+
+        with patch('client.GithubOrgClient._public_repos_url',
+                   new_callable=PropertyMock) as mk_repo:
+            mk_repo.return_value = 'test/test123'
+            tst_cls = GithubOrgClient('test')
+            rslt = tst_cls.public_repos()
+
+            jsn_rslt = [i['name'] for i in test]
+            self.assertEqual(jsn_rslt, rslt)
+
+            mk_jsn.assert_called_once()
+            mk_repo.assert_called_once()
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False)
+    ])
+    def test_has_license(self, repo, license_key, rslt):
+        """
+        test_has_license - method to test the has_license method of client cls
+        Arguments:
+            repo: the given repository
+            license_key: the license key
+        Returns:
+            ok if it succeded fail otherwise
+        """
+        tst_cls = GithubOrgClient.has_license(repo, license_key)
+        self.assertEqual(tst_cls, rslt)
+
+
+@parameterized_class(
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+    TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """an integration test for githuborg client"""
+
+    @classmethod
+    def setUpClass(cls):
+        """ set up class befor each method"""
+        config = {'return_value.json.side_effect':
+                  [
+                    cls.org_payload, cls.repos_payload,
+                    cls.org_payload, cls.repos_payload
+                  ]
+                  }
+        cls.get_patcher = patch('requests.get', **config)
+        cls.mock = cls.get_patcher.start()
+
+    def test_public_repos(self):
+        """add some more integration"""
+        tst_cls = GithubOrgClient('Facebook')
+        self.assertEqual(tst_cls.org, self.org_payload)
+        self.assertEqual(tst_cls.repos_payload, self.repos_payload)
+        self.assertEqual(tst_cls.public_repos(), self.expected_repos)
+        self.mock.assert_called()
+
+    def test_public_repos_with_license(self):
+        """ method to test the public_repos with the argument license """
+        test_class = GithubOrgClient("holberton")
+        assert True
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """tear down after each class"""
+        cls.get_patcher.stop()
