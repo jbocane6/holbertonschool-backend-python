@@ -12,7 +12,7 @@ to test the function for following inputs:
 """
 import unittest
 from unittest.mock import patch
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 
 
@@ -66,6 +66,41 @@ class TestGetJson(unittest.TestCase):
         with patch('requests.get') as mock:
             mock.return_value.json.return_value = test_payload
             self.assertEqual(get_json(test_url), test_payload)
+            mock.assert_called_once()
+
+
+class TestMemoize(unittest.TestCase):
+    """
+    Read about memoization and familiarize yourself
+    with the utils.memoize decorator.
+    Implement the TestMemoize(unittest.TestCase) class
+    with a test_memoize method.
+    Inside test_memoize, define TestClass class
+    """
+    def test_memoize(self):
+        """
+        Memoisation is a technique used in computing to speed up programs.
+        This is accomplished by memorizing the calculation results of
+        processed input such as the results of function calls.
+        If the same input or a function call with the same parameters is used,
+        the previously stored results can be used again
+        and unnecessary calculation are avoided.
+        In many cases a simple array is used for storing the results,
+        but lots of other structures can be used as well,
+        such as associative arrays, called dictionaries in Python.
+        """
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method', return_value=42) as mock:
+            tc = TestClass()
+            self.assertEqual(tc.a_property, mock.return_value)
+            self.assertEqual(tc.a_property, mock.return_value)
             mock.assert_called_once()
 
 
