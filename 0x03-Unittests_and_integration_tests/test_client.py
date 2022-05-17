@@ -13,7 +13,7 @@ with a couple of org examples to pass to GithubOrgClient, in this order:
 Of course, no external HTTP calls should be made.
 """
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, PropertyMock
 from parameterized import parameterized
 from client import GithubOrgClient
 
@@ -35,3 +35,20 @@ class TestGithubOrgClient(unittest.TestCase):
         tst_cls.org()
         mk_obj.assert_called_once_with(
             'https://api.github.com/orgs/{}'.format(org_name))
+
+    def test_public_repos_url(self):
+        """
+        Implement the test_public_repos_url method to
+        unit-test GithubOrgClient._public_repos_url.
+        Use patch as a context manager to patch GithubOrgClient.org
+        and make it return a known payload.
+        Test that the result of _public_repos_url is the expected one
+        based on the mocked payload.
+        """
+        with patch('client.GithubOrgClient.org',
+                   new_callable=PropertyMock) as mk:
+            pload = {'repos_url': 'test'}
+            mk.return_value = pload
+            tst_cls = GithubOrgClient('test')
+            rslt = tst_cls._public_repos_url
+            self.assertEqual(rslt, pload['repos_url'])
