@@ -39,7 +39,8 @@ class TestAccessNestedMap(unittest.TestCase):
         """
         Use the assertRaises context manager to test that a KeyError is raised.
         """
-        self.assertRaises(KeyError, access_nested_map, nested_map, path)
+        with self.assertRaises(Exception) as err:
+            access_nested_map(nested_map, path)
 
 
 class TestGetJson(unittest.TestCase):
@@ -66,7 +67,6 @@ class TestGetJson(unittest.TestCase):
         with patch('requests.get') as mock:
             mock.return_value.json.return_value = test_payload
             self.assertEqual(get_json(test_url), test_payload)
-            mock.assert_called_once()
 
 
 class TestMemoize(unittest.TestCase):
