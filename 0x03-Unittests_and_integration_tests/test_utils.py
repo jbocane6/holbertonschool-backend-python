@@ -11,7 +11,7 @@ Decorate the method with @parameterized.expand
 to test the function for following inputs:
 """
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 
@@ -47,7 +47,7 @@ class TestGetJson(unittest.TestCase):
     Define the TestGetJson(unittest.TestCase) class
     and implement the TestGetJson.test_get_json method to test
     that utils.get_json returns the expected result.
-    We don’t want to make any actual external HTTP calls.
+    We don't want to make any actual external HTTP calls.
     Use unittest.mock.patch to patch requests.get.
     Make sure it returns a Mock object with a json method
     that returns test_payload which you parametrize alongside
@@ -97,11 +97,11 @@ class TestMemoize(unittest.TestCase):
             def a_property(self):
                 return self.a_method()
 
-        with patch.object(TestClass, 'a_method', return_value=42) as mock:
-            tc = TestClass()
-            self.assertEqual(tc.a_property, mock.return_value)
-            self.assertEqual(tc.a_property, mock.return_value)
-            mock.assert_called_once()
+        with patch.object(TestClass, 'a_method', return_value=42) as mocked:
+            test = TestClass()
+            test.a_property
+            test.a_property
+            mocked.asset_called_once()
 
 
 if __name__ == '__main__':
